@@ -1,0 +1,6 @@
+This might be necessary for instances where psychopy does not play videos (i.e. MovieStim)
+
+1. Update pip: type the following in console:> python -m pip install --upgrade pip
+2. > pip install opencv-python
+3. Download  opencv_python-3.1.0-cp27-cp27m-win32.whl  from  http://www.lfd.uci.edu/~gohlke/pythonlibs/#opencv
+4. Run> pip install opencv_python-3.1.0-cp27-cp27m-win32.whl

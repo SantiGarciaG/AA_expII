@@ -1,0 +1,15 @@
+			**INSTRUCTIONS**
+        
+The following task consists of a card game where on each trial you can choose one of two decks displayed at the upper corners of the screen (by clicking on it with the mouse). 
+
+Each deck will provide you with different amounts of points and it will be followed by an image. You'll have to look at the image for a specified period before you can continue; you won't be able to control this.
+ 
+Each trial starts when you press the button "start," located at the lower centre of the screen. It is important that you initiate your response as soon as you press this button. 
+
+If you hear a beep, it means that you were too slow, so try to initiate your response in the next trial sooner (i.e., start moving the mouse as soon as you hit "start").
+
+Each trial-block will terminate upon completing a specified number of points. 
+
+Your goal is to gain as many points as possible in the least amount of trials, but you might want to consider also the stimuli associated with each deck. You can choose any deck at any time, and there will always be a spider-free choice. 
+
+When you're ready to continue just click (anywhere) the left-button of the mouse.

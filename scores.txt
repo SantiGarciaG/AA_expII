@@ -1,0 +1,2 @@
+subject_id	exp_type	score
+
