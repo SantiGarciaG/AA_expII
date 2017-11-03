@@ -123,8 +123,9 @@ class AvoidanceExpUI:
     
         return experiment_end_screen, final_score_stim    
     
-    def show_experiment_end_screen(self, score):
-        self.final_score_stim.setText(str(score))
+    def show_experiment_end_screen(self, lower_bound, upper_bound):
+        self.final_score_stim.setText('Lower bound: %i \n Upper bound: %i' 
+                                      % (lower_bound, upper_bound))
         self.show_message_screen(self.experiment_end_screen)
 
                 
@@ -240,7 +241,7 @@ class AvoidanceExpUI:
         # This (re)sets the deck images every trial, so it doesn't show the flipped images 
         # after reading code below
         # Note that what changes is the image drawn (not the variable)
-        if trial_info['is_club_left']:         
+        if trial_info['is_threat_left']:         
             self.left_card_img.setImage('resources/club_suitCard.png')        
             self.right_card_img.setImage('resources/spade_suitCard.png')                
             self.reward_left.setText(text= str(trial_info['rewards'][0])) 
@@ -286,18 +287,18 @@ class AvoidanceExpUI:
                                             pupil_size, eye_position[0], eye_position[1]])
             
             if self.mouse.mouse.isPressedIn(self.left_card_rect):
-                if trial_info['is_club_left']:
-                    card_chosen = 'Club'
+                if trial_info['is_threat_left']:
+                    card_chosen = 'Threat'
                     self.left_card_img.setImage('resources/flippedClubs.png')
                 else:
-                    card_chosen = 'Spade'
+                    card_chosen = 'Neutral'
                     self.left_card_img.setImage('resources/flippedSpades.png')
             elif self.mouse.mouse.isPressedIn(self.right_card_rect):
-                if trial_info['is_club_left']:
-                    card_chosen = 'Spade'
+                if trial_info['is_threat_left']:
+                    card_chosen = 'Neutral'
                     self.right_card_img.setImage('resources/flippedSpades.png')
                 else:
-                    card_chosen = 'Club'
+                    card_chosen = 'Threat'
                     self.right_card_img.setImage('resources/flippedClubs.png')
             
             libtime.pause(TIMESTEP)        
@@ -341,8 +342,8 @@ class AvoidanceExpUI:
                                             random.choice(os.listdir('img/neutral')))
             rnd = random.uniform(0,1)
             if ((not trial_info['is_baseline']) and \
-                ((trial_info['card_chosen'] == 'Club' and rnd < CLUB_THREAT_PROB) or \
-                (trial_info['card_chosen'] == 'Spade' and rnd < SPADE_THREAT_PROB))):
+                ((trial_info['card_chosen'] == 'Threat' and rnd < THREAT_THREAT_PROB) or \
+                (trial_info['card_chosen'] == 'Neutral' and rnd < NEUTRAL_THREAT_PROB))):
                 self.consequence_image.setImage('img/spiders/' + \
                                                     random.choice(os.listdir('img/spiders')))
                 threat_shown = True

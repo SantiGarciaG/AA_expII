@@ -4,20 +4,21 @@ EXP_TYPE = 'image'
 #EXP_TYPE = 'video'
 
 # Old parameters
-MAX_PRACTICE_TRIALS = 4
-N_BLOCKS = 4    # Number of "experimental" trial-blocks (not counting practice or baseline)
-MAX_N_TRIALS = 10    
-INITIAL_REWARDS = [16, 8]
-REWARD_DIFFERENCE = [4, 2, 1]
-PRACTICE_REWARDS = [[20, 22], [18, 20]]
+#MAX_PRACTICE_TRIALS = 4
+#MAX_N_TRIALS = 10    
+#N_BLOCKS = 4    # Number of "experimental" trial-blocks (not counting practice or baseline)
+#INITIAL_REWARDS = [16, 8]
+#REWARD_DIFFERENCE = [4, 2, 1]
+#PRACTICE_REWARDS = [[20, 22], [18, 20]]
 
 # New parameters
-#MIN_PRACTICE_TRIALS = 4
-#N_BLOCKS = 2    # Number of "experimental" trial-blocks (not counting practice or baseline)
-#MIN_N_TRIALS = 3
-#INITIAL_REWARDS = [12, 10]
-#REWARD_DIFFERENCE = 2
-#PRACTICE_REWARDS = [[12, 10], [12, 10]]   
+MIN_PRACTICE_TRIALS = 4
+MIN_N_TRIALS = 3
+MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
+INITIAL_REWARDS = [12, 10]
+REWARD_DIFFERENCE = 2
+PRACTICE_REWARDS = [[12, 10], [12, 10]]   
+
 
 ##MAX_N_TRIALS = 20 # TAKING AS POINT OF REFERENCE THE LOWER PAY OPTION (IF CHOSEN EXCLUSIVELY) (for "Exp. Group A" condition)
 
@@ -43,8 +44,8 @@ PRACTICE_REWARDS_2 = [20, 18]
 P_THRESHOLD = 0.5
 THRESHOLD_TYPE = "fixed"    # "fixed" for 50/50%, or "matching" for matching-law
 
-CLUB_THREAT_PROB = 1    # where 1 is 100%, 0.5 50% and 0.9 90% etc
-SPADE_THREAT_PROB = 0 
+THREAT_THREAT_PROB = 1    # where 1 is 100%, 0.5 50% and 0.9 90% etc
+NEUTRAL_THREAT_PROB = 0 
 
 ID_RANGE = (1000, 9999)
 BEEP_THRESHOLD = 500  # Response time under which the tone is played

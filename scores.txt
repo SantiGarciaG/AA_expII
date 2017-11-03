@@ -1,2 +1,2 @@
-subject_id	exp_type	score
+subject_id	exp_type	baseline	lower_bound	upper_bound
 

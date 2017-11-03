@@ -71,10 +71,11 @@ class AvoidanceExpDA:
             writer = csv.writer(fp, delimiter = '\t')
             writer.writerow(choice_info)
 
-    def write_score_log(self, score):
+    def write_score_log(self, baseline, lower_bound, upper_bound):
         with open(self.scores_log_file, 'ab+') as fp:
             writer = csv.writer(fp, delimiter = '\t')
-            writer.writerow([self.exp_info['subj_id'], self.exp_info['exp_type'], score]) 
+            writer.writerow([self.exp_info['subj_id'], self.exp_info['exp_type'], 
+                             baseline, lower_bound, upper_bound]) 
             
     # this function generates new random subject id if one is not provided in constants.py
     # (which is only the case for experiments requiring multiple sessions with each subject)

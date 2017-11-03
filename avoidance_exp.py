@@ -1,6 +1,7 @@
 from pygaze import libtime
 from constants import *
 import numpy as np
+import random
 from ui.avoidance_exp_ui import AvoidanceExpUI
 from da.avoidance_exp_da import AvoidanceExpDA
 from et.avoidance_exp_et import AvoidanceExpET
@@ -20,77 +21,103 @@ class AvoidanceExp:
         self.user_interface.show_experiment_start_screen()
         self.user_interface.show_practice_start_screen()
         
-        is_club_left = False
+        is_threat_left = random.choice([False, True])
         
         if not test_mode:
             for pract_block in range(2):
-                self.run_block(pract_block-2, PRACTICE_REWARDS[pract_block], MAX_PRACTICE_TRIALS, 
-                               is_club_left=is_club_left, is_baseline=True)
-                is_club_left = not is_club_left
+                self.run_block(pract_block-2, PRACTICE_REWARDS[pract_block], MIN_PRACTICE_TRIALS, 
+                               is_threat_left=is_threat_left, is_baseline=True)
+                is_threat_left = not is_threat_left
     
             self.user_interface.show_practice_end_screen()
             
             for baseline_block in range(1):
-                self.run_block(baseline_block, INITIAL_REWARDS, MAX_N_TRIALS, 
-                               is_club_left=is_club_left, is_baseline=True)
-                is_club_left = not is_club_left
-            
+                self.run_block(baseline_block, INITIAL_REWARDS, MIN_N_TRIALS, 
+                               is_threat_left=is_threat_left, is_baseline=True)
+                is_threat_left = not is_threat_left
+        
+        lower_bound, upper_bound = 0, 0
         rewards = INITIAL_REWARDS
-        for i in range(1, N_BLOCKS+1):
-            # Taking club-deck as reference, 
-            # REMEMBER: rewards[0] is reward for club card; rewards[1] is spade card         
-            p_club = self.run_block(i, rewards, MAX_N_TRIALS, is_club_left=is_club_left, 
-                                   is_baseline=False)  
-            
-            # We don't adjust the rewards after the last block is finished            
-            if i < N_BLOCKS:
-                # This is just to have a fall back value if no criteria is specified 
-                threshold = 0.5
-                if THRESHOLD_TYPE == 'fixed': 
-                    threshold = P_THRESHOLD
-                elif THRESHOLD_TYPE == 'matching':
-                    threshold = rewards[0]/(rewards[0] + rewards[1])
-                
-                # by just putting > if the response distribution reaches the exact threshold it is 
-                # defaulted to decrease the lower pay option -avoid- (otherwise use >= )
-                if p_club >= threshold:     
-                    # i (taken from the for loop) is used here to index the reward decrease rate 
-                    # depending on iterations
-                    rewards[0] = rewards[0] - REWARD_DIFFERENCE[i-1] 
-                else:
-                    # this means that if the first condition is not met, we decrease the reward of 
-                    # spade deck 
-                    rewards[1] = rewards[1] - REWARD_DIFFERENCE[i-1] 
-                    # (if the event of rising the P_THRESHOLD an extra condition 
-                    # might be needed for values below the selected threshold)           
-                    
+        threat_preferred = False
+        block_no=1
+        
+        '''
+        First, we run the "forward" sequence of blocks: assuming that participants would start from the
+        avoid behavior, we try to find the minimum reward for 'approach' which would 
+        force them to switch from the avoid behavior.
+        '''
+        while not threat_preferred:
+#        for i in range(1, N_BLOCKS+1):        
+            # REMEMBER: rewards[0] is reward for threat card; rewards[1] is neutral card         
+            p_threat = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
+                                   is_baseline=False)
+
+            # by just putting > if the response distribution reaches the exact threshold it is 
+            # defaulted to decrease the lower pay option -avoid- (otherwise use >= )
+            if p_threat < P_THRESHOLD:
+                # if threat option was chosen in less than 50% of the trials,
+                # increase the appeal of the threat option                    
+                rewards[0] = rewards[0] + REWARD_DIFFERENCE
+            else:
+                # if threat was chosen in more than 50% of the trials, we start 
+                # a second sequence of blocks with threat reward decreasing.
+                # for this, we need to exit the while loop, which will be done as soon as 
+                # threat_preferred is True
+                upper_bound = rewards[0]
+                rewards[0] = rewards[0] - REWARD_DIFFERENCE
+                threat_preferred = True
+                                
             # Here the value is changed in every block / iteration of 'for' loop
             # (from what was before depending on the number of iterations). 
             # So it starts with club_left = True and changed after the next iteration to = False, 
             # and after the second iteration the False is Not more (i.e., True)
-            is_club_left = not is_club_left   
+            is_threat_left = not is_threat_left 
+            block_no+=1
+            
+            if block_no > MAX_N_BLOCKS:
+                lower_bound = 0
+                upper_bound = 0                
+                threat_preferred = False
+                break
+                
+        '''
+        Second, when a participant switches to the approach behavior, we start the "reversed" 
+        sequence of blocks. In this sequence, we gradually decrease the reward for approaching the
+        threat until the participant switches back to 'avoid'.        
+        '''
+        while (threat_preferred):
+            p_threat = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
+                                   is_baseline=False)  
+            if p_threat >= P_THRESHOLD:
+                rewards[0] = rewards[0] - REWARD_DIFFERENCE
+            else:
+                lower_bound = rewards[0]
+                threat_preferred = False
+                
+            is_threat_left = not is_threat_left 
+            block_no+=1
         
         self.eye_tracker.close()    
         libtime.pause(500)
-        
-        score = self.calculate_score(rewards, p_club)
-        
-        self.data_access.write_score_log(score)
+                
+        self.data_access.write_score_log(baseline=INITIAL_REWARDS[1],
+                                         lower_bound=lower_bound, 
+                                         upper_bound=upper_bound)
 
-        self.user_interface.show_experiment_end_screen(score)
+        self.user_interface.show_experiment_end_screen(lower_bound, upper_bound)
         
         # With this function ALL of the screens are ended
         self.user_interface.close()
         
     #------ WE CREATE A FUNCTION THAT WILL RUN THE CONTENTS OF A BLOCK ----------             
-    def run_block(self, block_number, rewards, max_n_trials, is_club_left=True, is_baseline=False):
+    def run_block(self, block_number, rewards, min_n_trials, is_threat_left=True, is_baseline=False):
         self.eye_tracker.calibrate()
 
 #        scale_rating = self.user_interface.show_rating_screen()                        # mmmmmmmm
         
-        # The threshold is set by taking the minimum rewards and multiplying it by the value 
-        # in the constant MAX_N_TRIALS
-        threshold = max_n_trials * min(rewards)
+        # The threshold is set by taking the max reward and multiplying it by the minimum number 
+        # of trials per block (MIN_N_TRIALS)
+        threshold = min_n_trials * max(rewards)
         self.user_interface.show_block_start_screen(threshold)
         
         # We create the variable that will contain the points
@@ -106,22 +133,22 @@ class AvoidanceExp:
             card_chosen, points_earned, response_dynamics_log, consequence_dynamics_log, \
                 choice_info = \
                     self.run_trial(accumulated_points, threshold, block_number, trial_no, rewards,
-                                   is_club_left, is_baseline)
+                                   is_threat_left, is_baseline)
                                    
             self.data_access.write_trial_log(response_dynamics_log, consequence_dynamics_log, 
                                              choice_info)  
             
-            if card_chosen == 'Club':
-                # so 1 represent the 'club' deck 
+            if card_chosen == 'Threat':
+                # so 1 represent the 'threat' deck 
                 cards_chosen.append(1)
             else:
-                # so 0 represent the 'spade' deck 
+                # so 0 represent the 'neutral' deck 
                 cards_chosen.append(0)
                 
             accumulated_points += points_earned
             # We update the variable adding 1 per trial iteration            
             trial_no += 1
-        p_club = np.array(cards_chosen).mean() 
+        p_threat = np.array(cards_chosen).mean() 
 
          # we collect and save the "scale_rating" after the block ??????                 # mmmmmmmm
 #        scale_rating = self.user_interface.show_rating_screen()                         # mmmmmmmm
@@ -131,23 +158,24 @@ class AvoidanceExp:
             self.user_interface.show_block_end_screen()
                    
         # The calculated probability of preferring the 'club' deck 
-        return p_club
+        # TODO: make sure that we return p_threat!!!
+        return p_threat
             
     def run_trial(self, accumulated_points, threshold, block_no, trial_no, rewards,
-                  is_club_left=True, is_baseline=False):
+                  is_threat_left=True, is_baseline=False):
         trial_info = {'exp_type': self.exp_info['exp_type'],
                       'subj_id': self.exp_info['subj_id'],                      
                       'block_no': block_no,
                       'trial_no': trial_no,
                       'rewards': rewards,
-                      'is_club_left': is_club_left,
+                      'is_threat_left': is_threat_left,
                       'is_baseline': is_baseline}
         self.user_interface.show_trial_start_screen()
 
         self.eye_tracker.start_recording(start_message = 'subject %s block %d trial %d' % 
                                             (self.exp_info['subj_id'], block_no, trial_no))
 
-        self.user_interface.show_pre_decks_screen()                                  # *****************
+#        self.user_interface.show_pre_decks_screen()                                  # *****************
 
         response_dynamics_log, card_chosen, response_time = self.user_interface.show_decks_screen(                                                                    
                                                                     trial_info=trial_info,
@@ -157,9 +185,9 @@ class AvoidanceExp:
         trial_info['card_chosen'] = card_chosen
         points_earned = 0
         # this if is for the experimental blocks
-        if card_chosen == 'Club':
+        if card_chosen == 'Threat':
             points_earned = rewards[0]
-        elif card_chosen == 'Spade':
+        elif card_chosen == 'Neutral':
             points_earned = rewards[1] 
             
         self.eye_tracker.start_recording(start_message = 'subject %s block %d trial %d' % 
@@ -171,7 +199,7 @@ class AvoidanceExp:
         self.user_interface.show_trial_end_screen(points_earned, accumulated_points+points_earned,
                                                   threshold)
 
-        choice_info = [self.exp_info['subj_id'], block_no, trial_no, is_club_left, card_chosen, 
+        choice_info = [self.exp_info['subj_id'], block_no, trial_no, is_threat_left, card_chosen, 
                        points_earned, threat_shown, rewards[0], rewards[1], 
                         response_time, consequence_time]
 
@@ -192,5 +220,5 @@ class AvoidanceExp:
 
 
 # Comment these two below if exp run from "run_exp..." file
-avoid_exp = AvoidanceExp()
-avoid_exp.run_exp() 
+#avoid_exp = AvoidanceExp()
+#avoid_exp.run_exp() 
