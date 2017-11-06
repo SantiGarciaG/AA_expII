@@ -123,7 +123,7 @@ class AvoidanceExpUI:
         return experiment_end_screen, final_score_stim    
     
     def show_experiment_end_screen(self, upper_bound, lower_bound):
-        self.final_score_stim.setText('Upper bound: %i \n Lower bound: %i' 
+        self.final_score_stim.setText('Upper bound: %i \nLower bound: %i' 
                                       % (lower_bound, upper_bound))
         self.show_message_screen(self.experiment_end_screen)
 
@@ -378,17 +378,17 @@ class AvoidanceExpUI:
     def initialize_trial_end_screen(self):
         trial_end_screen = libscreen.Screen()
         
-        self.points_earned = visual.TextStim(pygaze.expdisplay, pos=(0,480), color='#F5F500', 
-                                             height=30)  #fontsize=height
+        self.points_earned = visual.TextStim(pygaze.expdisplay, pos=(0,440), color='#F5F500', 
+                                             height=35)  #fontsize=height
         trial_end_screen.screen.append(self.points_earned)
+        
+        self.accumulated_points = visual.TextStim(pygaze.expdisplay, pos=(0,380), color='#F5F500', 
+                                           height=32)
+        trial_end_screen.screen.append(self.accumulated_points)
         
         trial_end_instructions = visual.TextStim(pygaze.expdisplay, pos=(0,-450), color='#80FF40', 
                                           text='CLICK TO CONTINUE', height=28)
-        trial_end_screen.screen.append(trial_end_instructions)
-        
-        self.accumulated_points = visual.TextStim(pygaze.expdisplay, pos=(0,440), color='#F5F500', 
-                                           height=28)
-        trial_end_screen.screen.append(self.accumulated_points)
+        trial_end_screen.screen.append(trial_end_instructions)        
         
         return trial_end_screen
                 

@@ -19,13 +19,13 @@ EXP_TYPE = 'image'
 #REWARD_DIFFERENCE = 2
 #PRACTICE_REWARDS = [[10, 12], [8, 10]]   
 
-SUBJ_ID = 1111# None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+SUBJ_ID = None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
 #FEEDBACK_VIEWING_TIME = 4000 #for img version, 2500 for video version  # This is the time (in miliseconds) participants have to look at the contingent image     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented
 
 #====== values for testing =========
-MIN_PRACTICE_TRIALS = 2
+MIN_PRACTICE_TRIALS = 1
 MIN_N_TRIALS = 3
 MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
 INITIAL_REWARDS = [12, 10]

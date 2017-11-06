@@ -54,8 +54,8 @@ class AvoidanceExpDA:
         
         with open(self.choices_log_file, 'ab+') as fp:
             writer = csv.writer(fp, delimiter = '\t')
-            writer.writerow(['subj_id', 'block_no', 'trial_no', 'is_red_left', 'card_chosen', 
-                             'points_earned', 'threat', 'red_reward', 'blue_reward', 
+            writer.writerow(['subj_id', 'block_no', 'trial_no', 'approach_left', 'card_chosen', 
+                             'points_earned', 'threat', 'appro_reward', 'avoid_reward', 
                              'response_time', 'image_time'])
 
     def write_trial_log(self, response_dynamics_log, consequence_dynamics_log, choice_info): 
