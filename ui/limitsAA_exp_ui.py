@@ -77,7 +77,7 @@ class AvoidanceExpUI:
         self.practice_start_screen = self.intialize_message_screen(
                                 instructions_file % ('practice_start'))
         self.practice_end_screen = self.intialize_message_screen(
-                                instructions_file % ('practice_end'))
+                                instructions_file % ('practice_end'), color= '#FFAA00')
 
         self.block_start_screen, self.block_threshold_stim = self.initialize_block_start_screen(
                                 instructions_file % ('block_start'))
@@ -116,14 +116,14 @@ class AvoidanceExpUI:
     def initialize_experiment_end_screen(self, message_file):
         experiment_end_screen = self.intialize_message_screen(message_file)
         
-        final_score_stim = visual.TextStim(self.win, pos=(0,-150), color= '#F5F500',
-                                                    height=60, units='pix')
+        final_score_stim = visual.TextStim(self.win, pos=(0,-250), color= '#F5F500',
+                                                    height=50, units='pix')
         experiment_end_screen.screen.append(final_score_stim)
     
         return experiment_end_screen, final_score_stim    
     
-    def show_experiment_end_screen(self, lower_bound, upper_bound):
-        self.final_score_stim.setText('Lower bound: %i \n Upper bound: %i' 
+    def show_experiment_end_screen(self, upper_bound, lower_bound):
+        self.final_score_stim.setText('Upper bound: %i \n Lower bound: %i' 
                                       % (lower_bound, upper_bound))
         self.show_message_screen(self.experiment_end_screen)
 

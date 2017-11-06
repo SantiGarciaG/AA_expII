@@ -2,9 +2,9 @@ from pygaze import libtime
 from constants import *
 import numpy as np
 import random
-from ui.avoidance_exp_ui import AvoidanceExpUI
-from da.avoidance_exp_da import AvoidanceExpDA
-from et.avoidance_exp_et import AvoidanceExpET
+from ui.limitsAA_exp_ui import AvoidanceExpUI
+from da.limitsAA_exp_da import AvoidanceExpDA
+from et.limitsAA_exp_et import AvoidanceExpET
 
 # AvoidanceExp class provides high-level functions controlling the flow 
 # of the experiment. To run the experiment, just create the instance of the class and call run_exp()

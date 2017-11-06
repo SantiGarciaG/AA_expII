@@ -30,8 +30,8 @@ MIN_N_TRIALS = 3
 MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
 INITIAL_REWARDS = [12, 10]
 REWARD_DIFFERENCE = 2
-PRACTICE_REWARDS = [[10, 12], [8, 10]]   
-FEEDBACK_VIEWING_TIME = 1000 
+PRACTICE_REWARDS = [[12, 10], [10, 8]]   
+FEEDBACK_VIEWING_TIME = 500 
 DUMMYMODE = True
 #===================================
 
