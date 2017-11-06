@@ -12,33 +12,28 @@ EXP_TYPE = 'image'
 #PRACTICE_REWARDS = [[20, 22], [18, 20]]
 
 # New parameters
-MIN_PRACTICE_TRIALS = 4
+#MIN_PRACTICE_TRIALS = 2
+#MIN_N_TRIALS = 3
+#MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
+#INITIAL_REWARDS = [12, 10]
+#REWARD_DIFFERENCE = 2
+#PRACTICE_REWARDS = [[10, 12], [8, 10]]   
+
+SUBJ_ID = 1111# None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+#FEEDBACK_VIEWING_TIME = 4000 #for img version, 2500 for video version  # This is the time (in miliseconds) participants have to look at the contingent image     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented
+
+#====== values for testing =========
+MIN_PRACTICE_TRIALS = 2
 MIN_N_TRIALS = 3
 MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
 INITIAL_REWARDS = [12, 10]
 REWARD_DIFFERENCE = 2
-PRACTICE_REWARDS = [[12, 10], [12, 10]]   
-
-
-##MAX_N_TRIALS = 20 # TAKING AS POINT OF REFERENCE THE LOWER PAY OPTION (IF CHOSEN EXCLUSIVELY) (for "Exp. Group A" condition)
-
-#-------values for testing------------------
-#MAX_PRACTICE_TRIALS = 2
-#N_BLOCKS = 2    
-#MAX_N_TRIALS = 2
-#-------------------------
-
-SUBJ_ID = 1111# None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-# counterbalancing of the response buttons across blocks: 'alternate' (systematically); 
-COUNTERBALANCE = 'alternate' # TODO: 'random' option still to be coded!!!                # ********
-
-
-FEEDBACK_VIEWING_TIME = 4000 #for img version, 2500 for video version  # This is the time (in miliseconds) participants have to look at the contingent image   
-FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented
-
-PRACTICE_REWARDS_1 = [22, 20]
-PRACTICE_REWARDS_2 = [20, 18]
+PRACTICE_REWARDS = [[10, 12], [8, 10]]   
+FEEDBACK_VIEWING_TIME = 1000 
+DUMMYMODE = True
+#===================================
 
 
 P_THRESHOLD = 0.5
@@ -54,8 +49,8 @@ BEEP_THRESHOLD = 500  # Response time under which the tone is played
 TIMESTEP = 10 #mouse coordinate samplin rate in ms
 
 # MAIN
-DUMMYMODE = True         # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-#DUMMYMODE = False # False for gaze contingent display, True for dummy mode (using mouse or joystick)
+#DUMMYMODE = False         # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#DUMMYMODE = True # False for gaze contingent display, True for dummy mode (using mouse or joystick)
 LOGFILENAME = 'eyedata' # logfilename, without path
 LOGFILE = LOGFILENAME[:] # .txt; adding path before logfilename is optional; logs responses (NOT eye movements, these are stored in an EDF file!)
 

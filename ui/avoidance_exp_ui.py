@@ -47,15 +47,14 @@ class AvoidanceExpUI:
     # the actual size of the img is 960x720 but here is reduced to ensure the subject sees content
     consequence_area_size = (730, 460)    
 
-
 #    # (width, height)
-#    rating_button_size = (120, 60)                                                        # mmmmmmmm
+#    rating_button_size = (90, 60)                                                        # mmmmmmmm
 #    rating_button_pos = (0, -200) # (x, y) of "base button" for offsets 
 #
-#    button_x_offsets = [-DISPSIZE[1], -DISPSIZE[1]/2, -DISPSIZE[1]/3, -DISPSIZE[1]/4.5, -DISPSIZE[1]/6, 
-#                        DISPSIZE[1]/6, DISPSIZE[1]/4.5, DISPSIZE[1]/3, DISPSIZE[1]/2, DISPSIZE[1]] 
-#    button_y_offsets = [0,0,0,0,0,0,0,0,0,0] # For each button (0...7)  
-#
+#    button_x_offsets = [-DISPSIZE[1]/2, -DISPSIZE[1]/2.6, -DISPSIZE[1]/3.6, -DISPSIZE[1]/5.8, -DISPSIZE[1]/16, 
+#                        DISPSIZE[1]/16, DISPSIZE[1]/5.8, DISPSIZE[1]/3.6, DISPSIZE[1]/2.6, DISPSIZE[1]/2] 
+#    button_y_offsets = [0,0,0,0,0,0,0,0,0,0] # For each button (0...10)  
+
 #    scale_rating_labels = ['1','2','3','4','5','6','7','8','9','10']                 # mmmmmmmm
 
 
@@ -86,7 +85,7 @@ class AvoidanceExpUI:
                                 instructions_file % ('block_end'))
         
         self.trial_start_screen, self.start_button_rect = self.initialize_trial_start_screen()
-        self.pre_decks_screen, self.start_area_rect = self.initialize_pre_decks_screen()        # *****************
+#        self.pre_decks_screen, self.start_area_rect = self.initialize_pre_decks_screen()        # *****************
         self.decks_screen = self.initialize_decks_screen()
         self.consequence_screen = self.initialize_consequence_screen(EXP_TYPE)
         self.trial_end_screen = self.initialize_trial_end_screen()
@@ -202,10 +201,10 @@ class AvoidanceExpUI:
         decks_screen = libscreen.Screen()
         
         
-        self.deadzone_rect = visual.Rect(win=self.win, pos=self.deadzone_pos,       # *****************
-                                            width=self.deadzone_size[0], 
-                                            height=self.deadzone_size[1],
-                                            lineColor=None, fillColor=None)                
+#        self.deadzone_rect = visual.Rect(win=self.win, pos=self.deadzone_pos,       # *****************
+#                                            width=self.deadzone_size[0], 
+#                                            height=self.deadzone_size[1],
+#                                            lineColor=None, fillColor=None)                
        
         # We're using psychopy object ImageStim  
         self.left_card_img = visual.ImageStim(self.win, pos=self.left_card_pos) 
@@ -226,7 +225,7 @@ class AvoidanceExpUI:
                 
         
         # Here we specify the screeen onto which the decks are to be displayed
-        decks_screen.screen.append(self.deadzone_rect)                             # *****************
+#        decks_screen.screen.append(self.deadzone_rect)                             # *****************
         decks_screen.screen.append(self.left_card_img)
         decks_screen.screen.append(self.right_card_img)
         decks_screen.screen.append(self.left_card_rect)
@@ -253,9 +252,9 @@ class AvoidanceExpUI:
             self.reward_left.setText(text= str(trial_info['rewards'][1])) 
             self.reward_right.setText(text= str(trial_info['rewards'][0])) 
 
-        while self.deadzone_rect.contains(self.mouse.mouse):                     # *****************
-            self.disp.fill(self.decks_screen)
-            self.disp.show()
+#        while self.deadzone_rect.contains(self.mouse.mouse):                     # *****************
+#            self.disp.fill(self.decks_screen)
+#            self.disp.show()
 
                     
         self.disp.fill(self.decks_screen)

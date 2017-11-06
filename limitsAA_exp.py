@@ -113,8 +113,6 @@ class AvoidanceExp:
     def run_block(self, block_number, rewards, min_n_trials, is_threat_left=True, is_baseline=False):
         self.eye_tracker.calibrate()
 
-#        scale_rating = self.user_interface.show_rating_screen()                        # mmmmmmmm
-        
         # The threshold is set by taking the max reward and multiplying it by the minimum number 
         # of trials per block (MIN_N_TRIALS)
         threshold = min_n_trials * max(rewards)
@@ -150,12 +148,13 @@ class AvoidanceExp:
             trial_no += 1
         p_threat = np.array(cards_chosen).mean() 
 
-         # we collect and save the "scale_rating" after the block ??????                 # mmmmmmmm
-#        scale_rating = self.user_interface.show_rating_screen()                         # mmmmmmmm
-
         # We show the interblock message after each block except for the last one
         if block_number < 4:                
             self.user_interface.show_block_end_screen()
+
+#        scale_rating = self.user_interface.show_rating_screen()                        # mmmmmmmm
+         # we collect and save the "scale_rating" after the block ??????                 # mmmmmmmm
+#        scale_rating = self.user_interface.show_rating_screen()                         # mmmmmmmm
                    
         # The calculated probability of preferring the 'club' deck 
         # TODO: make sure that we return p_threat!!!
