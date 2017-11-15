@@ -1,2 +1,5 @@
 data/
 *.pyc
+existing_subj_ids.txt
+*.pyc
+*.pyc

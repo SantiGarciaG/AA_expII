@@ -201,14 +201,14 @@ class AvoidanceExpUI:
         decks_screen = libscreen.Screen()
         
         
-#        self.deadzone_rect = visual.Rect(win=self.win, pos=self.deadzone_pos,       # *****************
-#                                            width=self.deadzone_size[0], 
-#                                            height=self.deadzone_size[1],
-#                                            lineColor=None, fillColor=None)                
+        self.deadzone_rect = visual.Rect(win=self.win, pos=self.deadzone_pos,       # *****************
+                                            width=self.deadzone_size[0], 
+                                            height=self.deadzone_size[1],
+                                            lineColor=None, fillColor=None)                
        
         # We're using psychopy object ImageStim  
-        self.left_card_img = visual.ImageStim(self.win, pos=self.left_card_pos) 
-        self.right_card_img = visual.ImageStim(self.win, pos=self.right_card_pos)
+        self.left_card_img = visual.ImageStim(self.win, pos=self.left_card_pos, opacity=0.0) 
+        self.right_card_img = visual.ImageStim(self.win, pos=self.right_card_pos, opacity=0.0)
 
         self.left_card_rect = visual.Rect(win=self.win, pos=self.left_card_pos,
                                           width=self.card_size[0], height=self.card_size[1],
@@ -219,13 +219,13 @@ class AvoidanceExpUI:
                                             
        
         self.reward_left = visual.TextStim(self.win, pos=self.left_reward_pos, 
-                                           color= 'black', height= 90)        
+                                           color='black', height= 90, opacity=0.0)        
         self.reward_right = visual.TextStim(self.win, pos=self.right_reward_pos, 
-                                            color= 'black', height= 90)
+                                            color='black', height= 90, opacity=0.0)
                 
         
         # Here we specify the screeen onto which the decks are to be displayed
-#        decks_screen.screen.append(self.deadzone_rect)                             # *****************
+        decks_screen.screen.append(self.deadzone_rect)                             # *****************
         decks_screen.screen.append(self.left_card_img)
         decks_screen.screen.append(self.right_card_img)
         decks_screen.screen.append(self.left_card_rect)
@@ -237,26 +237,38 @@ class AvoidanceExpUI:
 
     def show_decks_screen(self, trial_info, tracker):
         self.mouse.set_visible(visible=True)
+        self.reward_left.setOpacity(0.0)
+        self.reward_right.setOpacity(0.0)
         # This (re)sets the deck images every trial, so it doesn't show the flipped images 
         # after reading code below
         # Note that what changes is the image drawn (not the variable)
         if trial_info['is_threat_left']:         
             self.left_card_img.setImage('resources/club_suitCard.png')        
             self.right_card_img.setImage('resources/spade_suitCard.png')                
-            self.reward_left.setText(text= str(trial_info['rewards'][0])) 
-            self.reward_right.setText(text= str(trial_info['rewards'][1])) 
         else:
             self.left_card_img.setImage('resources/spade_suitCard.png')        
             self.right_card_img.setImage('resources/club_suitCard.png')
+
+        while self.deadzone_rect.contains(self.mouse.mouse):                     # *****************
+            self.disp.fill(self.decks_screen)
+            self.disp.show()
+
+        self.left_card_img.setOpacity(1.0)  
+        self.right_card_img.setOpacity(1.0)  
+        self.reward_left.setOpacity(1.0)  
+        self.reward_right.setOpacity(1.0)
+        
+        if trial_info['is_threat_left']:                       
+            self.reward_left.setText(text= str(trial_info['rewards'][0])) 
+            self.reward_right.setText(text= str(trial_info['rewards'][1])) 
+        else:
             # We change the [] number to change the reward depending on the deck location
-            self.reward_left.setText(text= str(trial_info['rewards'][1])) 
-            self.reward_right.setText(text= str(trial_info['rewards'][0])) 
-
-#        while self.deadzone_rect.contains(self.mouse.mouse):                     # *****************
-#            self.disp.fill(self.decks_screen)
-#            self.disp.show()
-
-                    
+            self.reward_left.setText(text=str(trial_info['rewards'][1])) 
+            self.reward_right.setText(text=str(trial_info['rewards'][0])) 
+        
+        self.reward_left.setColor('black')
+        self.reward_right.setColor('black')
+        
         self.disp.fill(self.decks_screen)
         self.disp.show()
         
