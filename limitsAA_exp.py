@@ -86,16 +86,21 @@ class AvoidanceExp:
         threat until the participant switches back to 'avoid'.        
         '''
         while (threat_preferred):
-            p_threat = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
+            block_info = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
                                    is_baseline=False)  
+            p_threat = block_info['p_threat']
+            
             if p_threat >= P_THRESHOLD:
                 rewards[0] = rewards[0] - REWARD_DIFFERENCE
             else:
                 lower_bound = rewards[0]
                 threat_preferred = False
-                
+            
+            self.data_access.write_block_log(block_info)
+            
             is_threat_left = not is_threat_left 
             block_no+=1
+            
         
         self.eye_tracker.close()    
         libtime.pause(500)
@@ -148,17 +153,15 @@ class AvoidanceExp:
             trial_no += 1
         p_threat = np.array(cards_chosen).mean() 
 
+        scale_rating = self.user_interface.show_rating_screen()
+
         # We show the interblock message after each block except for the last one
         if block_number < 4:                
             self.user_interface.show_block_end_screen()
-
-#        scale_rating = self.user_interface.show_rating_screen()                        # mmmmmmmm
-         # we collect and save the "scale_rating" after the block ??????                 # mmmmmmmm
-#        scale_rating = self.user_interface.show_rating_screen()                         # mmmmmmmm
-                   
+        
+        block_info = [self.exp_info['subj_id'], block_number, p_threat, scale_rating]
         # The calculated probability of preferring the 'club' deck 
-        # TODO: make sure that we return p_threat!!!
-        return p_threat
+        return block_info
             
     def run_trial(self, accumulated_points, threshold, block_no, trial_no, rewards,
                   is_threat_left=True, is_baseline=False):

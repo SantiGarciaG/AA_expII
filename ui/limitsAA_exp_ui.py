@@ -48,15 +48,22 @@ class AvoidanceExpUI:
     consequence_area_size = (730, 460)    
 
 #    # (width, height)
-#    rating_button_size = (90, 60)                                                        # mmmmmmmm
-#    rating_button_pos = (0, -200) # (x, y) of "base button" for offsets 
-#
-#    button_x_offsets = [-DISPSIZE[1]/2, -DISPSIZE[1]/2.6, -DISPSIZE[1]/3.6, -DISPSIZE[1]/5.8, -DISPSIZE[1]/16, 
-#                        DISPSIZE[1]/16, DISPSIZE[1]/5.8, DISPSIZE[1]/3.6, DISPSIZE[1]/2.6, DISPSIZE[1]/2] 
-#    button_y_offsets = [0,0,0,0,0,0,0,0,0,0] # For each button (0...10)  
+    rating_button_size = (90, 60)                                                        # mmmmmmmm
+    rating_button_pos = (0, -200) # (x, y) of "base button" for offsets 
+    
+#    button_x_offsets = [-5*DISPSIZE[0]/15, -4*DISPSIZE[0]/15, -3*DISPSIZE[0]/15, -2*DISPSIZE[0]/15, -1*DISPSIZE[0]/15, 
+#                        1*DISPSIZE[0]/15, 2*DISPSIZE[0]/15, 3*DISPSIZE[0]/15, 4*DISPSIZE[0]/15, 5*DISPSIZE[0]/15] 
+        
+    button_x_offsets = [-DISPSIZE[1]/2, -DISPSIZE[1]/2.6, -DISPSIZE[1]/3.6, -DISPSIZE[1]/5.8, -DISPSIZE[1]/16, 
+                        DISPSIZE[1]/16, DISPSIZE[1]/5.8, DISPSIZE[1]/3.6, DISPSIZE[1]/2.6, DISPSIZE[1]/2] 
 
-#    scale_rating_labels = ['1','2','3','4','5','6','7','8','9','10']                 # mmmmmmmm
+    button_y_offsets = [0,0,0,0,0,0,0,0,0,0] # For each button (0...10)  
 
+    scale_rating_labels = ['1','2','3','4','5','6','7','8','9','10']                 # mmmmmmmm
+
+    rating_emoticon_positions = [(button_x_offsets[1], -100), 
+                                 (button_x_offsets[4], -100),
+                                 (button_x_offsets[7], -100)]  
 
     def __init__(self):
         self.disp = libscreen.Display()
@@ -89,6 +96,8 @@ class AvoidanceExpUI:
         self.decks_screen = self.initialize_decks_screen()
         self.consequence_screen = self.initialize_consequence_screen(EXP_TYPE)
         self.trial_end_screen = self.initialize_trial_end_screen()
+        
+        self.rating_screen = self.initialize_rating_screen()
 
 
     def intialize_message_screen(self, message_file, **kwargs):
@@ -419,67 +428,67 @@ class AvoidanceExpUI:
         libtime.pause(500)
 
 
-#    def initialize_rating_screen(self):
-#        rating_screen = libscreen.Screen()
-#
-#        instruction_text_file = 'resources/%s_question.txt'
-#        with open(instruction_text_file) as f:
-#                instructions = f.read()
-#
-#        labels = []
-#        label_size = 18        
-#        
-#        instructions_stim = visual.TextStim(self.win, text=instructions, units='pix', 
-#                                            wrapWidth=1200,#pos=(0,DISPSIZE[1]/2-300), 
-#                                            color='white', height=30)
-#        rating_screen.screen.append(instructions_stim)
-#
-#        self.rating_buttons = []        
-#        
-#        for i, label in enumerate(labels):
-#            button = visual.Rect(win=pygaze.expdisplay, 
-#                    pos=(self.rating_button_pos[0]+self.button_x_offsets[i], 
-#                         self.rating_button_pos[1]+self.button_y_offsets[i]),
-#                    width=self.rating_button_size[0], height=self.rating_button_size[1],
-#                    lineColor=(200,200,200), lineWidth=3, 
-#                    lineColorSpace='rgb255', fillColor=None)
-#            button_text = visual.TextStim(win=pygaze.expdisplay, text=labels[i], height=18,
-#                      pos=(self.rating_button_pos[0]+self.button_x_offsets[i], 
-#                           self.rating_button_pos[1]+self.button_y_offsets[i]))
-#            self.rating_buttons.append(button)
-#            
-#            rating_screen.screen.append(button)
-#            rating_screen.screen.append(button_text)
-#
-#        happyFace_img = visual.ImageStim(pygaze.expdisplay, 
-#                                         image='resources/happyFace.png', 
-#                                         pos=self.rating_emoticon_positions[0])
-#        rating_screen.screen.append(happyFace_img)                                          
-#        
-#        neutralFace_img = visual.ImageStim(pygaze.expdisplay, 
-#                                           image='resources/neutralFace.png', 
-#                                           pos=self.rating_emoticon_positions[1])
-#        rating_screen.screen.append(neutralFace_img)  
-#
-#        scaredFace_img = visual.ImageStim(pygaze.expdisplay, 
-#                                          image='resources/scaredFace.png', 
-#                                          pos=self.rating_emoticon_positions[2])
-#        rating_screen.screen.append(scaredFace_img)   
-#
-#        return rating_screen
-#
-#    def show_rating_screen(self):
-#        self.mouse.set_visible(True)
-#        
-#        self.disp.fill(self.rating_screen)
-#        self.disp.show()        
-#        
-#        while(True):
-#            for i, button in enumerate(self.rating_buttons):
-#                if self.mouse.mouse.isPressedIn(button):
-#                    return i
-#            self.disp.fill(self.rating_screen)
-#            self.disp.show()
+    def initialize_rating_screen(self):
+        rating_screen = libscreen.Screen()
+
+        instruction_text_file = 'resources/motivationScale_question.txt'
+        with open(instruction_text_file) as f:
+                instructions = f.read()
+
+        label_size = 18   
+        labels = self.scale_rating_labels
+        
+        instructions_stim = visual.TextStim(self.win, text=instructions, units='pix', 
+                                            wrapWidth=1200,#pos=(0,DISPSIZE[1]/2-300), 
+                                            color='white', height=30)
+        rating_screen.screen.append(instructions_stim)
+
+        self.rating_buttons = []        
+        
+        for i, label in enumerate(labels):
+            button = visual.Rect(win=pygaze.expdisplay, 
+                    pos=(self.rating_button_pos[0]+self.button_x_offsets[i], 
+                         self.rating_button_pos[1]+self.button_y_offsets[i]),
+                    width=self.rating_button_size[0], height=self.rating_button_size[1],
+                    lineColor=(200,200,200), lineWidth=3, 
+                    lineColorSpace='rgb255', fillColor=None)
+            button_text = visual.TextStim(win=pygaze.expdisplay, text=labels[i], height=18,
+                      pos=(self.rating_button_pos[0]+self.button_x_offsets[i], 
+                           self.rating_button_pos[1]+self.button_y_offsets[i]))
+            self.rating_buttons.append(button)
+            
+            rating_screen.screen.append(button)
+            rating_screen.screen.append(button_text)
+
+        happyFace_img = visual.ImageStim(pygaze.expdisplay, 
+                                         image='resources/happyFace.png', 
+                                         pos=self.rating_emoticon_positions[0])
+        rating_screen.screen.append(happyFace_img)                                          
+        
+        neutralFace_img = visual.ImageStim(pygaze.expdisplay, 
+                                           image='resources/neutralFace.png', 
+                                           pos=self.rating_emoticon_positions[1])
+        rating_screen.screen.append(neutralFace_img)  
+
+        scaredFace_img = visual.ImageStim(pygaze.expdisplay, 
+                                          image='resources/scaredFace.png', 
+                                          pos=self.rating_emoticon_positions[2])
+        rating_screen.screen.append(scaredFace_img)   
+
+        return rating_screen
+
+    def show_rating_screen(self):
+        self.mouse.set_visible(True)
+        
+        self.disp.fill(self.rating_screen)
+        self.disp.show()        
+        
+        while(True):
+            for i, button in enumerate(self.rating_buttons):
+                if self.mouse.mouse.isPressedIn(button):
+                    return i
+            self.disp.fill(self.rating_screen)
+            self.disp.show()
     
     def close(self):
         self.disp.close()

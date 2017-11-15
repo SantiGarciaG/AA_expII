@@ -33,12 +33,18 @@ class AvoidanceExpDA:
                                                          self.exp_info['exp_type']) 
         self.choices_log_file = log_name % ('choices', 'choices', 
                                             self.exp_info['exp_type'])
+        
+        self.blocks_log_file = log_name % ('blocks', 'blocks', 
+                                            self.exp_info['exp_type'])
+        
         self.scores_log_file = log_path % 'scores.txt'
         
         if not os.path.exists(log_path % 'dynamics'):
             os.makedirs(log_path % 'dynamics')
         if not os.path.exists(log_path % 'consequence'):
             os.makedirs(log_path % 'consequence')
+        if not os.path.exists(log_path % 'blocks'):
+            os.makedirs(log_path % 'blocks')
         if not os.path.exists(log_path % 'choices'):
             os.makedirs(log_path % 'choices')
             
@@ -57,6 +63,10 @@ class AvoidanceExpDA:
             writer.writerow(['subj_id', 'block_no', 'trial_no', 'approach_left', 'card_chosen', 
                              'points_earned', 'threat', 'appro_reward', 'avoid_reward', 
                              'response_time', 'image_time'])
+        
+        with open(self.blocks_log_file, 'ab+') as fp:
+            writer = csv.writer(fp, delimiter = '\t')
+            writer.writerow(['subj_id', 'block_no', 'p_threat', 'scale_rating']) #'sensation_rating'
 
     def write_trial_log(self, response_dynamics_log, consequence_dynamics_log, choice_info): 
         with open(self.response_dynamics_log_file, 'ab+') as fp:
@@ -71,11 +81,16 @@ class AvoidanceExpDA:
             writer = csv.writer(fp, delimiter = '\t')
             writer.writerow(choice_info)
 
+    def write_block_log(self, block_info):
+        with open(self.blocks_log_file, 'ab+') as fp:
+            writer = csv.writer(fp, delimiter = '\t')
+            writer.writerow(block_info)
+
     def write_score_log(self, baseline, lower_bound, upper_bound):
         with open(self.scores_log_file, 'ab+') as fp:
             writer = csv.writer(fp, delimiter = '\t')
             writer.writerow([self.exp_info['subj_id'], self.exp_info['exp_type'], 
-                             baseline, lower_bound, upper_bound]) 
+                             baseline, lower_bound, upper_bound])
             
     # this function generates new random subject id if one is not provided in constants.py
     # (which is only the case for experiments requiring multiple sessions with each subject)
