@@ -46,14 +46,15 @@ class AvoidanceExp:
         avoid behavior, we try to find the minimum reward for 'approach' which would 
         force them to switch from the avoid behavior.
         '''
-        while not threat_preferred:
+        while (not threat_preferred):
 #        for i in range(1, N_BLOCKS+1):        
             # REMEMBER: rewards[0] is reward for threat card; rewards[1] is neutral card         
             block_info = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
                                    is_baseline=False)
             # by just putting > if the response distribution reaches the exact threshold it is 
             # defaulted to decrease the lower pay option -avoid- (otherwise use >= )
-            if block_info[0] < P_THRESHOLD:
+            p_threat = block_info[2] 
+            if p_threat < P_THRESHOLD:
                 # if threat option was chosen in less than 50% of the trials,
                 # increase the appeal of the threat option                    
                 rewards[0] = rewards[0] + REWARD_DIFFERENCE
@@ -88,8 +89,8 @@ class AvoidanceExp:
         while (threat_preferred):
             block_info = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
                                    is_baseline=False)  
-            
-            if block_info[0] >= P_THRESHOLD:
+            p_threat = block_info[2] 
+            if p_threat < P_THRESHOLD:
                 rewards[0] = rewards[0] - REWARD_DIFFERENCE
             else:
                 lower_bound = rewards[0]

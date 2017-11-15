@@ -27,7 +27,7 @@ FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the 
 #====== values for testing =========
 MIN_PRACTICE_TRIALS = 1
 MIN_N_TRIALS = 3
-MAX_N_BLOCKS = 1    # Number of "experimental" trial-blocks (not counting practice or baseline)
+MAX_N_BLOCKS = 2    # Number of "experimental" trial-blocks (not counting practice or baseline)
 INITIAL_REWARDS = [12, 10]
 REWARD_DIFFERENCE = 2
 PRACTICE_REWARDS = [[12, 10], [10, 8]]   

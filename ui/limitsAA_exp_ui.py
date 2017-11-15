@@ -246,8 +246,12 @@ class AvoidanceExpUI:
 
     def show_decks_screen(self, trial_info, tracker):
         self.mouse.set_visible(visible=True)
+        
+        self.left_card_img.setOpacity(0.0)  
+        self.right_card_img.setOpacity(0.0)  
         self.reward_left.setOpacity(0.0)
         self.reward_right.setOpacity(0.0)
+        
         # This (re)sets the deck images every trial, so it doesn't show the flipped images 
         # after reading code below
         # Note that what changes is the image drawn (not the variable)
