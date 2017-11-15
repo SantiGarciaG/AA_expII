@@ -49,12 +49,11 @@ class AvoidanceExp:
         while not threat_preferred:
 #        for i in range(1, N_BLOCKS+1):        
             # REMEMBER: rewards[0] is reward for threat card; rewards[1] is neutral card         
-            p_threat = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
+            block_info = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
                                    is_baseline=False)
-
             # by just putting > if the response distribution reaches the exact threshold it is 
             # defaulted to decrease the lower pay option -avoid- (otherwise use >= )
-            if p_threat < P_THRESHOLD:
+            if block_info[0] < P_THRESHOLD:
                 # if threat option was chosen in less than 50% of the trials,
                 # increase the appeal of the threat option                    
                 rewards[0] = rewards[0] + REWARD_DIFFERENCE
@@ -66,7 +65,8 @@ class AvoidanceExp:
                 upper_bound = rewards[0]
                 rewards[0] = rewards[0] - REWARD_DIFFERENCE
                 threat_preferred = True
-                                
+        
+            self.data_access.write_block_log(block_info)
             # Here the value is changed in every block / iteration of 'for' loop
             # (from what was before depending on the number of iterations). 
             # So it starts with club_left = True and changed after the next iteration to = False, 
@@ -88,9 +88,8 @@ class AvoidanceExp:
         while (threat_preferred):
             block_info = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
                                    is_baseline=False)  
-            p_threat = block_info['p_threat']
             
-            if p_threat >= P_THRESHOLD:
+            if block_info[0] >= P_THRESHOLD:
                 rewards[0] = rewards[0] - REWARD_DIFFERENCE
             else:
                 lower_bound = rewards[0]
