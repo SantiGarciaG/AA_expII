@@ -73,14 +73,15 @@ class AvoidanceExp:
             # So it starts with club_left = True and changed after the next iteration to = False, 
             # and after the second iteration the False is Not more (i.e., True)
             is_threat_left = not is_threat_left 
-            block_no+=1
+            block_no+=1            
             
             if block_no > MAX_N_BLOCKS:
                 lower_bound = 0
                 upper_bound = 0                
                 threat_preferred = False
                 break
-                
+        
+        forward_blocks_number = block_no
         '''
         Second, when a participant switches to the approach behavior, we start the "reversed" 
         sequence of blocks. In this sequence, we gradually decrease the reward for approaching the
@@ -101,6 +102,8 @@ class AvoidanceExp:
             is_threat_left = not is_threat_left 
             block_no+=1
             
+            if block_no-forward_blocks_number > MAX_N_BLOCKS:
+                break
         
         self.eye_tracker.close()    
         libtime.pause(500)
