@@ -91,7 +91,7 @@ class AvoidanceExp:
             block_info = self.run_block(block_no, rewards, MIN_N_TRIALS, is_threat_left=is_threat_left, 
                                    is_baseline=False)  
             p_threat = block_info[2] 
-            if p_threat < P_THRESHOLD:
+            if p_threat > P_THRESHOLD:
                 rewards[0] = rewards[0] - REWARD_DIFFERENCE
             else:
                 lower_bound = rewards[0]
