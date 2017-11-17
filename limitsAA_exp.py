@@ -159,8 +159,11 @@ class AvoidanceExp:
         scale_rating = self.user_interface.show_rating_screen()
 
         # We show the interblock message after each block except for the last one
-        if block_number < 4:                
+        if block_number < 4:
             self.user_interface.show_block_end_screen()
+        
+#        while not self.mouse.get_clicked():                
+#            self.user_interface.show_block_end_screen()        
         
         block_info = [self.exp_info['subj_id'], block_number, p_threat, scale_rating]
         # The calculated probability of preferring the 'club' deck 

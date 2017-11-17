@@ -490,7 +490,7 @@ class AvoidanceExpUI:
         while(True):
             for i, button in enumerate(self.rating_buttons):
                 if self.mouse.mouse.isPressedIn(button):
-                    return i
+                    return i+1
             self.disp.fill(self.rating_screen)
             self.disp.show()
     
