@@ -159,8 +159,7 @@ class AvoidanceExp:
         scale_rating = self.user_interface.show_rating_screen()
 
         # We show the interblock message after each block except for the last one
-        if block_number < 4:
-            self.user_interface.show_block_end_screen()
+        self.user_interface.show_block_end_screen()
         
 #        while not self.mouse.get_clicked():                
 #            self.user_interface.show_block_end_screen()        
