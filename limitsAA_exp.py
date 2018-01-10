@@ -228,5 +228,4 @@ class AvoidanceExp:
 
 # Comment these two below if exp run from "run_exp..." file
 avoid_exp = AvoidanceExp()
-avoid_exp.run_exp(test_mode=True) 
-#avoid_exp.run_exp() 
+avoid_exp.run_exp(test_mode=False) 

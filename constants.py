@@ -1,37 +1,31 @@
 ##Experiment-specific variables
 
 EXP_TYPE = 'image'
-#EXP_TYPE = 'video'
+#EXP_TYPE = 'video' #No used for this exp
 
-# Old parameters
-#MAX_PRACTICE_TRIALS = 4
-#MAX_N_TRIALS = 10    
-#N_BLOCKS = 4    # Number of "experimental" trial-blocks (not counting practice or baseline)
-#INITIAL_REWARDS = [16, 8]
-#REWARD_DIFFERENCE = [4, 2, 1]
-#PRACTICE_REWARDS = [[20, 22], [18, 20]]
+#===================================
+MIN_PRACTICE_TRIALS = 2
+MIN_N_TRIALS = 10
+MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
+INITIAL_REWARDS = [12, 10]
+REWARD_DIFFERENCE = 2
+PRACTICE_REWARDS = [[10, 12], [8, 10]]   
+FEEDBACK_VIEWING_TIME = 500 #4000 # consequential stimulus presentation
+#DUMMYMODE = False
+#===================================
 
-# New parameters
-#MIN_PRACTICE_TRIALS = 2
+SUBJ_ID = None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+   
+FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented  # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+
+#====== values for testing =========
+#MIN_PRACTICE_TRIALS = 1
 #MIN_N_TRIALS = 3
 #MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
 #INITIAL_REWARDS = [12, 10]
 #REWARD_DIFFERENCE = 2
-#PRACTICE_REWARDS = [[10, 12], [8, 10]]   
-
-SUBJ_ID = None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-
-#FEEDBACK_VIEWING_TIME = 4000 #for img version, 2500 for video version  # This is the time (in miliseconds) participants have to look at the contingent image     # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented
-
-#====== values for testing =========
-MIN_PRACTICE_TRIALS = 1
-MIN_N_TRIALS = 3
-MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
-INITIAL_REWARDS = [12, 10]
-REWARD_DIFFERENCE = 2
-PRACTICE_REWARDS = [[12, 10], [10, 8]]   
-FEEDBACK_VIEWING_TIME = 500 
+#PRACTICE_REWARDS = [[12, 10], [10, 8]]   
+#FEEDBACK_VIEWING_TIME = 500 
 DUMMYMODE = True
 #===================================
 

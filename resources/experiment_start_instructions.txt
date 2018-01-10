@@ -1,4 +1,4 @@
-			**INSTRUCTIONS**
+						  **INSTRUCTIONS**
         
 The following task consists of a card game where on each trial you can choose one of two decks displayed at the upper corners of the screen (by clicking on it with the mouse). 
 

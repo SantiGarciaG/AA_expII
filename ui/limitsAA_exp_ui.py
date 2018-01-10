@@ -54,16 +54,16 @@ class AvoidanceExpUI:
 #    button_x_offsets = [-5*DISPSIZE[0]/15, -4*DISPSIZE[0]/15, -3*DISPSIZE[0]/15, -2*DISPSIZE[0]/15, -1*DISPSIZE[0]/15, 
 #                        1*DISPSIZE[0]/15, 2*DISPSIZE[0]/15, 3*DISPSIZE[0]/15, 4*DISPSIZE[0]/15, 5*DISPSIZE[0]/15] 
         
-    button_x_offsets = [-DISPSIZE[1]/2, -DISPSIZE[1]/2.6, -DISPSIZE[1]/3.6, -DISPSIZE[1]/5.8, -DISPSIZE[1]/16, 
-                        DISPSIZE[1]/16, DISPSIZE[1]/5.8, DISPSIZE[1]/3.6, DISPSIZE[1]/2.6, DISPSIZE[1]/2] 
+    button_x_offsets = [-DISPSIZE[1]/2.5, -DISPSIZE[1]/3.8, -DISPSIZE[1]/7.8, 0, 
+                        DISPSIZE[1]/7.8, DISPSIZE[1]/3.8, DISPSIZE[1]/2.5] 
 
-    button_y_offsets = [0,0,0,0,0,0,0,0,0,0] # For each button (0...10)  
+    button_y_offsets = [0,0,0,0,0,0,0] # For each button (0...10)  
 
-    scale_rating_labels = ['1','2','3','4','5','6','7','8','9','10']                 # mmmmmmmm
+    scale_rating_labels = ['1','2','3','4','5','6','7']                 # mmmmmmmm
 
-    rating_emoticon_positions = [(button_x_offsets[1], -100), 
+    rating_emoticon_positions = [(button_x_offsets[0], -100), 
                                  (0, -100),
-                                 (button_x_offsets[8], -100)]  
+                                 (button_x_offsets[6], -100)]  
 
     def __init__(self):
         self.disp = libscreen.Display()
@@ -161,6 +161,10 @@ class AvoidanceExpUI:
     
     def show_block_end_screen(self):
         self.show_message_screen(self.block_end_screen)
+
+        self.mouse.get_clicked()
+
+        libtime.pause(500)
 
     def initialize_trial_start_screen(self):
         trial_start_screen = libscreen.Screen()
