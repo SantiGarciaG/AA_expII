@@ -10,7 +10,7 @@ MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting pract
 INITIAL_REWARDS = [12, 10]
 REWARD_DIFFERENCE = 2
 PRACTICE_REWARDS = [[10, 12], [8, 10]]   
-FEEDBACK_VIEWING_TIME = 500 #4000 # consequential stimulus presentation
+#FEEDBACK_VIEWING_TIME = 4000 # consequential stimulus presentation
 #DUMMYMODE = False
 #===================================
 
@@ -25,7 +25,7 @@ FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the 
 #INITIAL_REWARDS = [12, 10]
 #REWARD_DIFFERENCE = 2
 #PRACTICE_REWARDS = [[12, 10], [10, 8]]   
-#FEEDBACK_VIEWING_TIME = 500 
+FEEDBACK_VIEWING_TIME = 500 
 DUMMYMODE = True
 #===================================
 
