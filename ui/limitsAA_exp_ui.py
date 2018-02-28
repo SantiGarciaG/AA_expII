@@ -113,7 +113,7 @@ class AvoidanceExpUI:
         self.mouse.set_visible(True)
         self.disp.fill(screen)
         self.disp.show()
-        libtime.pause(100)
+#        libtime.pause(100)
         self.mouse.get_clicked()
         self.mouse.set_visible(False)
         libtime.pause(500)

@@ -24,8 +24,10 @@ class AvoidanceExp:
         is_threat_left = random.choice([False, True])
         
         if not test_mode:
-            for pract_block in range(2):
-                self.run_block(pract_block-2, PRACTICE_REWARDS[pract_block], MIN_PRACTICE_TRIALS, 
+#            for pract_block in range(2):
+#                self.run_block(pract_block-2, PRACTICE_REWARDS[pract_block], MIN_PRACTICE_TRIALS, 
+            for pract_block in range(1):
+                self.run_block(pract_block-1, PRACTICE_REWARDS[pract_block], MIN_PRACTICE_TRIALS,
                                is_threat_left=is_threat_left, is_baseline=True)
                 is_threat_left = not is_threat_left
     

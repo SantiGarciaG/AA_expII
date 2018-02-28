@@ -4,17 +4,18 @@ EXP_TYPE = 'image'
 #EXP_TYPE = 'video' #No used for this exp
 
 #===================================
-MIN_PRACTICE_TRIALS = 2
+MIN_PRACTICE_TRIALS = 3
 MIN_N_TRIALS = 10
 MAX_N_BLOCKS = 10    # Number of "experimental" trial-blocks (not counting practice or baseline)
 INITIAL_REWARDS = [12, 10]
 REWARD_DIFFERENCE = 2
-PRACTICE_REWARDS = [[10, 12], [8, 10]]   
+PRACTICE_REWARDS = [[5, 5], [5, 5]]    #[[10, 12], [8, 10]]   
 #FEEDBACK_VIEWING_TIME = 4000 # consequential stimulus presentation
 #DUMMYMODE = False
 #===================================
 
 SUBJ_ID = None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#SUBJ_ID = 0000
    
 FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented  # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
@@ -54,6 +55,8 @@ LOGFILE = LOGFILENAME[:] # .txt; adding path before logfilename is optional; log
 SCREENNR = 0 # number of the screen used for displaying experiment
 DISPTYPE = 'psychopy' # either 'psychopy' or 'pygame'
 DISPSIZE = (1920,1080) # canvas size
+
+#DISPSIZE = (1366,768) # for small laptop 
 
 #SCREENSIZE = (53., 30.) # physical display size in cm
 BGC = (0,0,0,255) # backgroundcolour

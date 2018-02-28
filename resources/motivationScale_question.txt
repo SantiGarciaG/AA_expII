@@ -4,7 +4,7 @@
 
 Using the scale below:
 
-1 = Not at all difficult ;  10 = extremely difficult
+1 = Not at all difficult ;  7 = extremely difficult
 
 
 

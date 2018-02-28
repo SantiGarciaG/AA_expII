@@ -2,8 +2,11 @@ That's the end of the practice.
 
 The next block of trials is the start of the real experiment. 
 
-The task is the same as the one you did before, but as you progress from block to block some characteristics of the decks will change.
+The task is the same, but as you progress from block to block some characteristics of the decks will change.
 
-REMEMBER: Your choice is between both the points and the stimuli associated with each deck.
+REMEMBER: Your choice is between both the points and the stimuli associated with each card (one of the choices will always be spider-free). 
 
-CLICK WITH THE MOUSE TO BEGIN THE EXPERIMENT
+And don't forget to move your mouse upwards to make the decks appear! 
+
+
+CLICK TO BEGIN THE EXPERIMENT
