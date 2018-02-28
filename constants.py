@@ -15,7 +15,7 @@ PRACTICE_REWARDS = [[5, 5], [5, 5]]    #[[10, 12], [8, 10]]
 #===================================
 
 SUBJ_ID = None # If an id number is given instead, this is used and no id number is automatically generated # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
-#SUBJ_ID = 0000
+#SUBJ_ID = 6666
    
 FEEDBACK_VIEWING_THRESHOLD = 25000  # This is the max time (in miliseconds) the feedback is presented  # XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
 
